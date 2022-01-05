@@ -69,4 +69,75 @@ Lights: energy use of light fixtures in the house in Wh
 
 Appliances: energy use in Wh (Target Variable)
 
-Where indicated, hourly data (then interpolated) from the nearest airport weather station (Chievres Airport, Belgium) was downloaded from a public data set from Reliable Prognosis, rp5.ru. Permission was obtained from Reliable Prognosis for the distribution of the 4.5 months of weather data.
+DATA EXPLORATION
+
+Number of instances: 19,735 Number of attributes: 29
+
+No NaN Values found. No Duplicates found. As maximum value in lights attribute is 0, it wont be playing much role in our model. Hence we are dropping the lights attribute from our dataset.
+
+Renamed Temperature and Humidity Features Accordingly using dictionary as below:
+
+temp = { 'T1' : 'kitchen_temp', 'T2' : 'living_temp', 'T3' : 'laundry_temp', 'T4' : 'office_temp', 'T5' : 'bath_temp', 'T6' : 'outside_temp', 'T7' : 'ironing_temp', 'T8' : 'teen_temp', 'T9' : 'parents_temp', 'T_out' : 'station_temp' }
+
+humid = { 'RH_1' : 'kitchen_humid', 'RH_2' : 'living_humid', 'RH_3' : 'laundry_humid', 'RH_4' : 'office_humid', 'RH_5' : 'bath_humid', 'RH_6' : 'outside_humid', 'RH_7' : 'ironing_humid', 'RH_8' : 'teen_humid', 'RH_9' : 'parents_humid', 'RH_out' : 'station_humid' }
+
+INSIGHTS FROM DATA VISUALIZATION:
+
+Observations⚡:
+
+Average energy consumption of appliances at different time of the day over a period of 4.5 months, we observe two peak hours. One at 11 am in the morning and other at 6 PM in the evening. While the peak at 11 am is shallow and low, peak at 6 PM is comparatively higher and sharper.
+
+We observe that over the sleeping hours (10 PM - 6 AM) the energy consumption of appliances is around 50 Wh. After about 6 AM, energy consumption starts to rise gradually up until 11 AM (probably due to morning chores). And then gradually decreases to around 100 Wh at about 3 PM. After which the energy consumption drastically shoots up up until 6 PM in the evening (probably due to requirement lights in rooms). However energy consumption of appliances reverts back to 50 Wh, as night approaches and people in the house go to bed at around 10 PM.
+
+Insights ⚡: We observe that the energy consumption of appliances during the 8 AM - 4 PM is higher in weekends compared to the weekdays. Also, average overall consumption in weekends is pretty high.
+
+Insights⚡:
+
+90% of Appliance consumption is less than 200 Wh .
+
+This column is postively skewed , most the values are around mean 100 Wh .
+
+There will be outliers in this column.
+
+There are small number of cases where consumption is very high.
+
+Observations⚡:
+
+Outside Average temperature over a period of 4.5 months is around 7.5 degrees and ranges from -6(min) to 28(max) degrees.
+
+Inside the building avarage temperature has been around 20 degrees for all the rooms and ranges from 14(min) to 30(max) degrees.
+
+Note: These points implies that warming appliances have been used to keep the insides of the building warm. There must be some sort of direct correlation b/w temperature and consumption of energy inside the house.
+
+Observations⚡:
+
+Outside the building average temp > average humidity inside the house.
+
+Average humidity at the weather station > outside humidity near the building.
+
+Average humidity in the bathroom > other rooms due to obvious reasons.
+
+Kids and parent room show a comparatively higher average humidity.
+
+OBSERVATIONS⚡:
+
+From the correlation graph we clearly observe that the features related to temperature and features related to humidity have positive correlation within themselves whereas have a a very low or negative correlation with each other.
+
+Humidity outside have a strong negative correlation with temperature levels.
+
+Apart from that we observe that a couple features such as humidity at station, temperature outside the building and temperature in the living room have a comparatively high absolute correlation (above 0.12) with Appliances energy consumption.
+
+CONCLUSION:
+
+● Dataset doesn’t have any null values.
+
+● We have observed very less co-relation between the target and feature variables.
+
+● Dropped features like rv1 & rv2 as it has infinity VIF.
+
+● Top 2 models were Extra Tree Regressor & Random Forest.
+
+● Worked on Multi-Collinearity, but not much significant effect on the dataset.
+
+● Tree based models are the best ones while dealing with features which has very less correlation with the target variable.
+
